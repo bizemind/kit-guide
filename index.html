@@ -5,152 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <title>Kit Finder | Creatis</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #f6f7f9;
-  --surface: #ffffff;
-  --border: #e0e0e0;
-  --text: #1a1a1a;
-  --muted: #888;
-  --faint: #bbb;
-  --chip: #f1f1f1;
-  --info-bg: #eff6ff;
-  --info-border: #93c5fd;
-  --info-text: #1d4ed8;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-pill: 99px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f7f9;
+  --surface:#ffffff;
+  --border:#e0e0e0;
+  --text:#1a1a1a;
+  --muted:#888;
+  --faint:#bbb;
+  --chip:#f1f1f1;
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-pill:99px;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111113;
-    --surface: #1c1c1e;
-    --border: #2e2e30;
-    --text: #f0f0f0;
-    --muted: #888;
-    --faint: #555;
-    --chip: #2a2a2c;
-    --info-bg: #1e2d45;
-    --info-border: #3b6cb7;
-    --info-text: #93c5fd;
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#111113;
+    --surface:#1c1c1e;
+    --border:#2e2e30;
+    --text:#f0f0f0;
+    --muted:#888;
+    --faint:#555;
+    --chip:#2a2a2c;
   }
 }
-
-html { -webkit-text-size-adjust: 100%; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
-  line-height: 1.6;
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
+  line-height:1.6;
 }
+.app{max-width:560px;margin:0 auto;padding:1.25rem 1rem 3rem}
+.header{display:flex;align-items:baseline;gap:8px;margin-bottom:1.25rem}
+.header h1{font-size:20px;font-weight:700;letter-spacing:-0.3px}
+.header span{font-size:13px;color:var(--muted)}
 
-.app {
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 1.25rem 1rem 3rem;
+.filter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.125rem;margin-bottom:1rem}
+.filter-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px}
+.filter-pills{display:flex;flex-wrap:wrap;gap:6px}
+.filter-pill{
+  font-size:13px;padding:5px 12px;border-radius:var(--radius-pill);
+  background:var(--chip);color:var(--muted);border:1px solid var(--border);
+  cursor:pointer;transition:transform .12s;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
 }
+.filter-pill:hover{transform:scale(1.05)}
+.filter-pill:active{transform:scale(.95)}
+.filter-pill.active{background:var(--text);color:var(--bg);border-color:var(--text)}
 
-.header {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 1.25rem;
+.preview{
+  border-radius:var(--radius-md);height:70px;margin-bottom:1.25rem;
+  border:1px solid var(--border);background:var(--chip);
+  display:flex;align-items:center;padding:0 1.125rem;overflow:hidden;
+  transition:background .25s;
 }
-.header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
-.header span { font-size: 13px; color: var(--muted); }
+.preview img{
+  width:70px;height:70px;object-fit:cover;
+  border-radius:var(--radius-sm) 0 0 var(--radius-sm);
+  margin:-1px 12px -1px -1.125rem;flex-shrink:0;
+}
+.preview-text{font-size:13px;color:var(--muted)}
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.125rem;
-  margin-bottom: 1rem;
-}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.125rem;margin-bottom:.75rem}
+.card-header{display:flex;align-items:center;gap:14px}
+.thumb{width:52px;height:52px;flex-shrink:0;border-radius:var(--radius-sm);border:1px solid var(--border);object-fit:cover;background:var(--chip)}
+.kit-name{font-size:16px;font-weight:600}
+.kit-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:11px;padding:3px 9px;border-radius:var(--radius-pill);background:var(--chip);border:1px solid var(--border);color:var(--muted)}
 
-.section-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 12px;
+.accordion-toggle{margin-top:12px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);-webkit-tap-highlight-color:transparent}
+.accordion-toggle:hover{color:var(--text)}
+.accordion-content{margin-top:12px;border-top:1px solid var(--border);padding-top:14px;display:none}
+.accordion-content.open{display:block}
+.kit-tagline{font-size:13px;color:var(--muted);margin-bottom:14px}
+.view-link{
+  display:inline-block;font-size:13px;font-weight:600;
+  color:var(--text);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:7px 14px;
+  text-decoration:none;-webkit-tap-highlight-color:transparent;
 }
+.view-link:hover{border-color:var(--muted)}
 
-.chip-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 8px;
-}
-
-.chip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  padding: 9px 10px;
-  border-radius: var(--radius-pill);
-  background: var(--chip);
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all .15s ease;
-  white-space: nowrap;
-  color: var(--text);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  user-select: none;
-}
-.chip:hover { border-color: var(--muted); }
-.chip:active { opacity: 0.7; }
-.chip.active {
-  background: var(--info-bg);
-  border-color: var(--info-border);
-  color: var(--info-text);
-}
-
-.result-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.125rem;
-  margin-bottom: 1rem;
-  display: none;
-}
-
-.kit-item {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.kit-item:last-child { border-bottom: none; padding-bottom: 0; }
-.kit-item:first-child { padding-top: 0; }
-
-.kit-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--info-text);
-  text-decoration: none;
-}
-.kit-name:hover { text-decoration: underline; }
-
-.kit-tag {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 3px;
-}
-
-.footer-note {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  padding: 10px 12px;
-  background: var(--chip);
-  border-radius: var(--radius-sm);
-}
-.footer-note a { color: var(--info-text); }
+.footer-note{font-size:12px;color:var(--muted);text-align:center;padding:10px 12px;background:var(--chip);border-radius:var(--radius-sm)}
+.footer-note a{color:var(--text)}
+.empty{font-size:14px;color:var(--faint);text-align:center;padding:1.5rem 0}
 </style>
 </head>
 <body>
@@ -161,87 +103,255 @@ body {
     <span>by Creatis</span>
   </div>
 
-  <div class="card">
-    <div class="section-label">What are they most into?</div>
-    <div class="chip-grid" id="chipGroup"></div>
+  <div class="filter-card">
+    <div class="filter-label">Filter by interest</div>
+    <div class="filter-pills" id="filters"></div>
   </div>
 
-  <div class="result-card" id="resultCard">
-    <div class="section-label">Available kits</div>
-    <div id="kitOutput"></div>
+  <div id="preview" class="preview">
+    <span class="preview-text">Select a kit to preview</span>
+  </div>
+
+  <div id="grid"></div>
+
+  <div class="footer-note">
+    Short on time? Same designs available as finished
+    <a href="https://onedayinnovember.in/collections/table-linen" target="_blank">napkins</a>.
   </div>
 
 </div>
 <script>
-const kitMap = {
-  Nature: { kits: [
-    { name: "Wild Flower Block Kit", tagline: "For nature-lovers who notice every leaf, petal, and sky shift.", url: "https://onedayinnovember.in/products/wild-flower-block-kit" },
-    { name: "Petal Embroidery Kit",  tagline: "Slow, meditative stitching inspired by floral forms — expressive, tactile, and deeply calming.", url: "https://onedayinnovember.in/products/petal-embroidery-kit" }
-  ]},
-  Garden: { kits: [
-    { name: "Sprig Block Kit", tagline: "For those who love plants, slow mornings, and green corners.", url: "https://onedayinnovember.in/products/sprig-block-kit" },
-    { name: "Pea Embroidery Kit", tagline: "Delicate, playful stitching inspired by peas, climbing vines, and gentle garden rhythms.", url: "https://onedayinnovember.in/products/pea-embroidery-kit" }
-  ]},
-  Food: { kits: [
-    { name: "Lemon Block Kit",    tagline: "Bright, zesty, and perfect for food lovers.", url: "https://onedayinnovember.in/products/lemon-block-kit" },
-    { name: "Lemon Embroidery Kit", tagline: "A little zest, a little stitch, and a whole lot of charm.", url: "https://onedayinnovember.in/products/lemon-embroidery-kit" },
-    { name: "Cupcake Block Kit",  tagline: "Playful, sweet, and full of celebratory charm.", url: "https://onedayinnovember.in/products/cupcake-block-kit" },
-    { name: "Popsicle Block Kit", tagline: "Bold, graphic, and nostalgic — summer captured in print.", url: "https://onedayinnovember.in/products/popsicle-block-kit" },
-    { name: "Orange Block Kit",   tagline: "Juicy, graphic forms inspired by fruit, colour, and everyday abundance.", url: "https://onedayinnovember.in/products/orange-block-kit" }
-  ]},
-  Travel: { kits: [
-    { name: "Wave Block Kit",     tagline: "For travellers who collect moments, not magnets.", url: "https://onedayinnovember.in/products/wave-block-kit" },
-    { name: "Mountain Block Kit", tagline: "Quiet, expansive forms inspired by landscapes, journeys, and open horizons.", url: "https://onedayinnovember.in/products/mountain-block-kit" }
-  ]},
-  Animals: { kits: [
-    { name: "Tiger Block Kit",    tagline: "Bold, expressive, and full of character.", url: "https://onedayinnovember.in/products/tiger-block-kit" },
-    { name: "Monkey Block Kit",   tagline: "Playful, curious, and full of movement — perfect for spirited makers.", url: "https://onedayinnovember.in/products/monkey-block-kit" },
-    { name: "Peacock Block Kit",  tagline: "Elegant, detailed, and richly patterned — a celebration of beauty and form.", url: "https://onedayinnovember.in/products/peacock-block-kit" },
-    { name: "Elephant Block Kit", tagline: "Strong, steady, and symbolic — grounded motifs with quiet presence.", url: "https://onedayinnovember.in/products/elephant-block-kit" }
-  ]},
-  Art: { kits: [
-    { name: "Cypress Block Kit", tagline: "Graceful, sculptural forms inspired by botanical studies and timeless pattern.", url: "https://onedayinnovember.in/products/cypress-block-kit" }
-  ]},
-  Sports: { kits: [
-    { name: "Tennis Block Kit", tagline: "Clean lines, rhythm, and energy.", url: "https://onedayinnovember.in/products/tennis-block-kit" }
-  ]},
-  Music: { kits: [
-    { name: "Piano Block Kit", tagline: "For music lovers drawn to rhythm, repetition, and quiet harmony.", url: "https://onedayinnovember.in/products/piano-block-kit" }
-  ]},
-  Love: { kits: [
-    { name: "Hearts Block Set",  tagline: "A classic motif for love in all its forms — warm, personal, and timeless.", url: "https://onedayinnovember.in/products/hearts-block-set" },
-    { name: "Garland Block Set", tagline: "Flowing forms that celebrate connection, rituals, and togetherness.", url: "https://onedayinnovember.in/products/garland-block-set" },
-    { name: "Rose Block Kit",    tagline: "Romantic, expressive florals that speak quietly of care and affection.", url: "https://onedayinnovember.in/products/rose-block-kit" }
-  ]},
-  Occasions: { kits: [
-    { name: "Valentine's Day Block Kit", tagline: "A thoughtful, hands-on way to mark love, connection, and shared moments.", url: "https://onedayinnovember.in/products/rose-block-kit" },
-    { name: "Mother's Day Block Kit",    tagline: "A gentle, meaningful gift — made slowly, with care and gratitude.", url: "https://onedayinnovember.in/products/sprig-block-kit" }
-  ]}
-};
+const KITS = [
+  {
+    name: "Wild Flower Block Kit",
+    category: "Nature",
+    tagline: "For nature-lovers who notice every leaf, petal, and sky shift.",
+    url: "https://onedayinnovember.in/products/wild-flower-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6385.jpg?v=1766912598"
+  },
+  {
+    name: "Petal Embroidery Kit",
+    category: "Nature",
+    tagline: "Slow, meditative stitching inspired by floral forms — expressive, tactile, and deeply calming.",
+    url: "https://onedayinnovember.in/products/petal-embroidery-kit",
+    img: ""
+  },
+  {
+    name: "Sprig Block Kit",
+    category: "Garden",
+    tagline: "For those who love plants, slow mornings, and green corners.",
+    url: "https://onedayinnovember.in/products/sprig-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/block_print_kit_2.jpg?v=1767601344"
+  },
+  {
+    name: "Pea Embroidery Kit",
+    category: "Garden",
+    tagline: "Delicate, playful stitching inspired by peas, climbing vines, and gentle garden rhythms.",
+    url: "https://onedayinnovember.in/products/pea-embroidery-kit",
+    img: ""
+  },
+  {
+    name: "Lemon Block Kit",
+    category: "Food",
+    tagline: "Bright, zesty, and perfect for food lovers.",
+    url: "https://onedayinnovember.in/products/lemon-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/block_print_kit_3.png?v=1764993594"
+  },
+  {
+    name: "Lemon Embroidery Kit",
+    category: "Food",
+    tagline: "A little zest, a little stitch, and a whole lot of charm.",
+    url: "https://onedayinnovember.in/products/lemon-embroidery-kit",
+    img: ""
+  },
+  {
+    name: "Cupcake Block Kit",
+    category: "Food",
+    tagline: "Playful, sweet, and full of celebratory charm.",
+    url: "https://onedayinnovember.in/products/cupcake-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7332.jpg?v=1769507212"
+  },
+  {
+    name: "Popsicle Block Kit",
+    category: "Food",
+    tagline: "Bold, graphic, and nostalgic — summer captured in print.",
+    url: "https://onedayinnovember.in/products/popsicle-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7395_1.jpg?v=1769769625"
+  },
+  {
+    name: "Orange Block Kit",
+    category: "Food",
+    tagline: "Juicy, graphic forms inspired by fruit, colour, and everyday abundance.",
+    url: "https://onedayinnovember.in/products/orange-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6378.jpg?v=1766911759"
+  },
+  {
+    name: "Wave Block Kit",
+    category: "Travel",
+    tagline: "For travellers who collect moments, not magnets.",
+    url: "https://onedayinnovember.in/products/wave-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6039.jpg?v=1765513630"
+  },
+  {
+    name: "Mountain Block Kit",
+    category: "Travel",
+    tagline: "Quiet, expansive forms inspired by landscapes, journeys, and open horizons.",
+    url: "https://onedayinnovember.in/products/mountain-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7215.jpg?v=1768626276"
+  },
+  {
+    name: "Tiger Block Kit",
+    category: "Animals",
+    tagline: "Bold, expressive, and full of character.",
+    url: "https://onedayinnovember.in/products/tiger-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6048_1.png?v=1765516128"
+  },
+  {
+    name: "Monkey Block Kit",
+    category: "Animals",
+    tagline: "Playful, curious, and full of movement — perfect for spirited makers.",
+    url: "https://onedayinnovember.in/products/monkey-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7182.jpg?v=1768481811"
+  },
+  {
+    name: "Peacock Block Kit",
+    category: "Animals",
+    tagline: "Elegant, detailed, and richly patterned — a celebration of beauty and form.",
+    url: "https://onedayinnovember.in/products/peacock-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7589.jpg?v=1769770697"
+  },
+  {
+    name: "Elephant Block Kit",
+    category: "Animals",
+    tagline: "Strong, steady, and symbolic — grounded motifs with quiet presence.",
+    url: "https://onedayinnovember.in/products/elephant-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7576.jpg?v=1769771849"
+  },
+  {
+    name: "Cypress Block Kit",
+    category: "Art",
+    tagline: "Graceful, sculptural forms inspired by botanical studies and timeless pattern.",
+    url: "https://onedayinnovember.in/products/cypress-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7836.jpg?v=1770371760"
+  },
+  {
+    name: "Tennis Block Kit",
+    category: "Sports",
+    tagline: "Clean lines, rhythm, and energy.",
+    url: "https://onedayinnovember.in/products/tennis-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6629.png?v=1767763550"
+  },
+  {
+    name: "Piano Block Kit",
+    category: "Music",
+    tagline: "For music lovers drawn to rhythm, repetition, and quiet harmony.",
+    url: "https://onedayinnovember.in/products/piano-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6625_1.png?v=1767764006"
+  },
+  {
+    name: "Hearts Block Set",
+    category: "Love",
+    tagline: "A classic motif for love in all its forms — warm, personal, and timeless.",
+    url: "https://onedayinnovember.in/products/hearts-block-set",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6834.jpg?v=1767934521"
+  },
+  {
+    name: "Garland Block Set",
+    category: "Love",
+    tagline: "Flowing forms that celebrate connection, rituals, and togetherness.",
+    url: "https://onedayinnovember.in/products/garland-block-set",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_6837.jpg?v=1767935499"
+  },
+  {
+    name: "Rose Block Kit",
+    category: "Love",
+    tagline: "Romantic, expressive florals that speak quietly of care and affection.",
+    url: "https://onedayinnovember.in/products/rose-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7829.jpg?v=1770372311"
+  },
+  {
+    name: "Valentine's Day Block Kit",
+    category: "Occasions",
+    tagline: "A thoughtful, hands-on way to mark love, connection, and shared moments.",
+    url: "https://onedayinnovember.in/products/rose-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/IMG_7829.jpg?v=1770372311"
+  },
+  {
+    name: "Mother's Day Block Kit",
+    category: "Occasions",
+    tagline: "A gentle, meaningful gift — made slowly, with care and gratitude.",
+    url: "https://onedayinnovember.in/products/sprig-block-kit",
+    img: "https://cdn.shopify.com/s/files/1/0758/8505/2120/files/block_print_kit_2.jpg?v=1767601344"
+  }
+];
 
-const group      = document.getElementById("chipGroup");
-const resultCard = document.getElementById("resultCard");
-const kitOutput  = document.getElementById("kitOutput");
-let activeChip   = null;
+const CATEGORIES = ["All","Nature","Garden","Food","Travel","Animals","Art","Sports","Music","Love","Occasions"];
+let active = "All";
 
-Object.keys(kitMap).forEach(key => {
-  const el = document.createElement("div");
-  el.className = "chip";
-  el.textContent = key;
-  el.addEventListener("click", () => {
-    if (activeChip) activeChip.classList.remove("active");
-    el.classList.add("active");
-    activeChip = el;
-    const kits = kitMap[key].kits;
-    kitOutput.innerHTML = kits.map(k => `
-      <div class="kit-item">
-        <a class="kit-name" href="${k.url}" target="_blank">${k.name}</a>
-        <div class="kit-tag">${k.tagline}</div>
-      </div>`).join("");
-    resultCard.style.display = "block";
-  });
-  group.appendChild(el);
+const fEl = document.getElementById("filters");
+CATEGORIES.forEach(c => {
+  const b = document.createElement("button");
+  b.className = "filter-pill" + (c === "All" ? " active" : "");
+  b.textContent = c;
+  b.onclick = () => {
+    active = c;
+    document.querySelectorAll(".filter-pill").forEach(x => x.classList.remove("active"));
+    b.classList.add("active");
+    render();
+  };
+  fEl.appendChild(b);
 });
+
+function render() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  const list = KITS.filter(k => active === "All" || k.category === active);
+  if (!list.length) {
+    grid.innerHTML = '<div class="empty">No kits in this category.</div>';
+    return;
+  }
+  list.forEach((k, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    const uid = "acc-" + i + "-" + k.name.replace(/\W/g, "");
+    const imgTag = k.img
+      ? `<img class="thumb" src="${k.img}" alt="${k.name}" />`
+      : `<div class="thumb"></div>`;
+    card.innerHTML = `
+      <div class="card-header">
+        ${imgTag}
+        <div>
+          <div class="kit-name">${k.name}</div>
+          <div class="kit-sub">${k.category}</div>
+          <div class="tag-row"><span class="tag">${k.category}</span></div>
+        </div>
+      </div>
+      <div class="accordion-toggle" data-id="${uid}" data-img="${k.img}" data-name="${k.name}">View details →</div>
+      <div class="accordion-content" id="${uid}">
+        <p class="kit-tagline">${k.tagline}</p>
+        <a class="view-link" href="${k.url}" target="_blank">View on website ↗</a>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  document.querySelectorAll(".accordion-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const el = document.getElementById(btn.dataset.id);
+      const open = el.classList.toggle("open");
+      btn.textContent = open ? "Hide details ↑" : "View details →";
+      if (open) {
+        const prev = document.getElementById("preview");
+        if (btn.dataset.img) {
+          prev.innerHTML = `<img src="${btn.dataset.img}" alt="${btn.dataset.name}" /><span class="preview-text">${btn.dataset.name}</span>`;
+        } else {
+          prev.innerHTML = `<span class="preview-text">${btn.dataset.name}</span>`;
+        }
+      }
+    });
+  });
+}
+
+render();
 </script>
 </body>
 </html>
