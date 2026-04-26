@@ -114,6 +114,11 @@ body{
 
   <div id="grid"></div>
 
+  <div class="footer-note">
+    Short on time? Same designs available as finished
+    <a href="https://onedayinnovember.in/collections/table-linen" target="_blank">napkins</a>.
+  </div>
+
   <div style="text-align:center;margin-top:1.5rem;font-size:12px;color:var(--faint)">
     Built by <a href="https://creatis.in/pages/stack" target="_blank" style="color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border)">The Creatis Stack</a>
   </div>
@@ -300,6 +305,14 @@ CATEGORIES.forEach(c => {
   };
   fEl.appendChild(b);
 });
+
+const customBtn = document.createElement("a");
+customBtn.className = "filter-pill";
+customBtn.textContent = "Custom";
+customBtn.href = "https://onedayinnovember.in/pages/bespoke-kit";
+customBtn.target = "_blank";
+customBtn.style.textDecoration = "none";
+fEl.appendChild(customBtn);
 
 function render() {
   const grid = document.getElementById("grid");
